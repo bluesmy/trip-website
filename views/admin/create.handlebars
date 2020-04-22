@@ -24,8 +24,8 @@
     <div class="form-group col-md-4">
       <label for="type">Type</label>
       <select id="type" name="type" class="form-control">
-        <option {{#ifCond product.type Trip}} selected {{/ifCond}}>Trip</option>
-        <option {{#ifCond product.type Room}} selected {{/ifCond}}>Room</option>
+        <option {{#ifCond product.type "Trip"}} selected {{/ifCond}}>Trip</option>
+        <option {{#ifCond product.type "Room"}} selected {{/ifCond}}>Room</option>
       </select>
     </div>
 
