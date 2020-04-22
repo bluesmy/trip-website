@@ -1,0 +1,34 @@
+<div class="modal-content">
+  <div class="modal-header">
+    <h2 id="login_title" class="modal-title">免費註冊</h2>
+  </div>
+  <div class="modal-body login-board">
+    <div class="login-sns">
+      <h4>使用社交平台帳戶登入</h4>
+      <a href="/auth/facebook" class="btn login-facebook btn-circle"><i class="fa fa-facebook fa-lg"></i></a>
+      <a href="/auth/line" class="btn login-line btn-circle"><i class="fab fa-line fa-lg"></i></a>
+      <a href="/auth/google" class="btn login-google btn-circle"><i class="fa fa-google fa-lg"></i></a>
+    </div>
+    <div class="title-gap"><span class="text-muted">或
+      </span></div>
+    <h4>免費註冊</h4>
+    <form role="form" action="/signup" method="POST">
+      <div class="form-label-group">
+        <label for="inputEmail"></label>
+        <input type="text" name="email" class="form-control" placeholder="Email" required autofocus>
+      </div>
+      <div class="form-label-group">
+        <label for="inputPassword"></label>
+        <input type="password" name="password" class="form-control" placeholder="Password" required>
+      </div>
+      <div class="form-label-group">
+        <label for="inputPasswordCheck"></label>
+        <input type="password" name="passwordCheck" class="form-control" placeholder="Password Check" required>
+      </div>
+      <div class="clearfix"></div>
+      <button id="signupBTN" type="submit" class="btn btn-primary btn-lg btn-block h4">註冊</button>
+    </form>
+    <div id="login_asset"><a href="/login" class="text-info">Login</a>
+    </div>
+  </div>
+</div>

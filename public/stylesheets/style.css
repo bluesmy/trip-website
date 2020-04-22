@@ -1,0 +1,38 @@
+.login-sns {
+    text-align: center;
+}
+
+.btn-circle {
+    width: 60px;
+    height: 60px;
+    border-radius: 100%;
+    text-align: center;
+    margin: 3px;
+    padding: 10px;
+}
+
+.btn-circle i:before {
+    line-height: 42px;
+}
+
+.login-facebook {
+    background-color: #3b5998;
+    color:white;
+}
+
+.login-line {
+    background-color: #01b901;
+    color:white;
+}
+
+.login-google {
+    background-color: #dd4b39;
+    color:white;
+}
+
+.title-gap {
+    border-bottom: 1px solid #eee;
+    text-align: center;
+    height: 12px;
+    margin: 20px 0 30px;
+}
