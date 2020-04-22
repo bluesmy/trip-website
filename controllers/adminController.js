@@ -1,6 +1,11 @@
+const db = require('../models')
+const Product = db.Product
+
 const adminController = {
   getProducts: (req, res) => {
-    return res.render('admin/products')
+    return Product.findAll().then(products => {
+      return res.render('admin/products', { products })
+    })
   }
 }
 
