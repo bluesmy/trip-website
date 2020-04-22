@@ -1,6 +1,8 @@
 const db = require('../models')
 const Product = db.Product
 const User = db.User
+const Media = db.Media
+const fs = require('fs')
 
 const adminController = {
   getProducts: (req, res) => {
@@ -18,17 +20,63 @@ const adminController = {
       req.flash('error_messages', "所有欄位皆需填寫")
       return res.redirect('back')
     }
-    return Product.create({
-      name: req.body.name,
-      price: req.body.price,
-      description: req.body.description,
-      type: req.body.type,
-      status: req.body.status
-    })
-      .then(product => {
+    const { files, file } = req
+    if (files) {
+      Product.create({
+        name: req.body.name,
+        price: req.body.price,
+        description: req.body.description,
+        type: req.body.type,
+        status: req.body.status
+      }).then(product => {
+        files.map(file => {
+          fs.readFile(file.path, (err, data) => {
+            if (err) console.log('Error: ', err)
+            fs.writeFile(`upload/${file.originalname}`, data, () => {
+              Media.create({
+                src: file ? `/upload/${file.originalname}` : null,
+                ProductId: product.id,
+                type: 'image'
+              })
+            })
+          })
+        })
         req.flash('success_messages', 'Product was successfully created')
         res.redirect('/admin/products')
       })
+    } else if (file) {
+      Product.create({
+        name: req.body.name,
+        price: req.body.price,
+        description: req.body.description,
+        type: req.body.type,
+        status: req.body.status
+      }).then(product => {
+        fs.readFile(file.path, (err, data) => {
+          if (err) console.log('Error: ', err)
+          fs.writeFile(`upload/${file.originalname}`, data, () => {
+            Media.create({
+              src: file ? `/upload/${file.originalname}` : null,
+              ProductId: product.id,
+              type: 'image'
+            })
+          })
+        })
+        req.flash('success_messages', 'Product was successfully created')
+        res.redirect('/admin/products')
+      })
+    } else {
+      return Product.create({
+        name: req.body.name,
+        price: req.body.price,
+        description: req.body.description,
+        type: req.body.type,
+        status: req.body.status
+      }).then(product => {
+        req.flash('success_messages', 'Product was successfully created')
+        res.redirect('/admin/products')
+      })
+    }
   },
 
   getProduct: (req, res) => {
@@ -48,19 +96,70 @@ const adminController = {
       req.flash('error_messages', "所有欄位皆需填寫")
       return res.redirect('back')
     }
-    return Product.findByPk(req.params.id).then(product => {
-      product.update({
-        name: req.body.name,
-        price: req.body.price,
-        description: req.body.description,
-        type: req.body.type,
-        status: req.body.status
-      })
-    })
-      .then(product => {
+    const { files, file } = req
+    if (files) {
+      console.log(files)
+      Product.findByPk(req.params.id).then(product => {
+        product.update({
+          name: req.body.name,
+          price: req.body.price,
+          description: req.body.description,
+          type: req.body.type,
+          status: req.body.status
+        })
+      }).then(product => {
+        files.map(file => {
+          fs.readFile(file.path, (err, data) => {
+            if (err) console.log('Error: ', err)
+            fs.writeFile(`upload/${file.originalname}`, data, () => {
+              Media.create({
+                src: file ? `/upload/${file.originalname}` : null,
+                ProductId: req.params.id,
+                type: 'image'
+              })
+            })
+          })
+        })
         req.flash('success_messages', 'Product was successfully updated')
         res.redirect('/admin/products')
       })
+    } else if (file) {
+      Product.findByPk(req.params.id).then(product => {
+        product.update({
+          name: req.body.name,
+          price: req.body.price,
+          description: req.body.description,
+          type: req.body.type,
+          status: req.body.status
+        })
+      }).then(product => {
+        fs.readFile(file.path, (err, data) => {
+          if (err) console.log('Error: ', err)
+          fs.writeFile(`upload/${file.originalname}`, data, () => {
+            Media.create({
+              src: file ? `/upload/${file.originalname}` : null,
+              ProductId: req.params.id,
+              type: 'image'
+            })
+          })
+        })
+        req.flash('success_messages', 'Product was successfully updated')
+        res.redirect('/admin/products')
+      })
+    } else {
+      return Product.findByPk(req.params.id).then(product => {
+        product.update({
+          name: req.body.name,
+          price: req.body.price,
+          description: req.body.description,
+          type: req.body.type,
+          status: req.body.status
+        })
+      }).then(product => {
+        req.flash('success_messages', 'Product was successfully updated')
+        res.redirect('/admin/products')
+      })
+    }
   },
 
   deleteProduct: (req, res) => {
