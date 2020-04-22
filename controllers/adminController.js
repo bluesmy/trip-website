@@ -80,6 +80,27 @@ const adminController = {
       })
   },
 
+  putUser: (req, res) => {
+    // 修改使用者為admin/user
+    User.findByPk(req.params.id)
+      .then(user => {
+        if (user.role === 'admin') {
+          user.update({
+            role: 'user'
+          })
+        }
+        else {
+          user.update({
+            role: 'admin'
+          })
+        }
+      })
+      .then(user => {
+        req.flash('success_messages', '使用者身分已成功更新')
+        res.redirect('/admin/users')
+      })
+  }
+
 }
 
 module.exports = adminController
