@@ -60,6 +60,16 @@ const adminController = {
         req.flash('success_messages', 'Product was successfully updated')
         res.redirect('/admin/products')
       })
+  },
+
+  deleteProduct: (req, res) => {
+    return Product.findByPk(req.params.id)
+      .then(product => {
+        product.destroy()
+          .then(product => {
+            res.redirect('/admin/products')
+          })
+      })
   }
 }
 
