@@ -34,6 +34,12 @@ const adminController = {
     return Product.findByPk(req.params.id, { nest: true, raw: true }).then(product => {
       return res.render('admin/product', { product })
     })
+  },
+
+  editProduct: (req, res) => {
+    return Product.findByPk(req.params.id, { nest: true, raw: true }).then(product => {
+      return res.render('admin/create', { product })
+    })
   }
 }
 

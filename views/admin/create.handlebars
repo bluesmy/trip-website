@@ -1,46 +1,55 @@
-<form action="/admin/products" method="POST">
-  <div class="form-group">
-    <label for="name">Name</label>
-    <input type="text" class="form-control" name="name" id="name" placeholder="Enter name" required>
-  </div>
+{{#if product}}
+<form action="/admin/products/{{product.id}}?_method=PUT" method="POST">
+  {{else}}
+  <form action="/admin/products" method="POST">
+    {{/if}}
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input type="text" class="form-control" name="name" id="name" placeholder="Enter name" value="{{product.name}}"
+        required>
+    </div>
 
-  <div class="form-group">
-    <label for="price">Price</label>
-    <input type="text" class="form-control" name="price" id="name" placeholder="Enter price" required>
-  </div>
+    <div class="form-group">
+      <label for="price">Price</label>
+      <input type="text" class="form-control" name="price" id="price" placeholder="Enter price"
+        value="{{product.price}}" required>
+    </div>
 
-  <div class="form-group">
-    <label for="description">Description</label>
-    <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
-  </div>
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea class="form-control" id="description" name="description" rows="3"
+        required>{{product.description}}</textarea>
+    </div>
 
-  <div class="form-group col-md-4">
-    <label for="type">Type</label>
-    <select id="type" name="type" class="form-control">
-      <option selected>Trip</option>
-      <option>Room</option>
-    </select>
-  </div>
+    <div class="form-group col-md-4">
+      <label for="type">Type</label>
+      <select id="type" name="type" class="form-control">
+        <option {{#ifCond product.type Trip}} selected {{/ifCond}}>Trip</option>
+        <option {{#ifCond product.type Room}} selected {{/ifCond}}>Room</option>
+      </select>
+    </div>
 
-  <fieldset class="form-group">
-    <div class="row">
-      <legend class="col-form-label col-sm-2 pt-0">上架狀態</legend>
-      <div class="col-sm-10">
-        <div class="form-check">
-          <input class="form-check-input" type="radio" name="status" id="status1" value="未上架" checked>
-          <label class="form-check-label" for="status1">
-            未上架
-          </label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input" type="radio" name="status" id="status2" value="上架中">
-          <label class="form-check-label" for="status2">
-            上架中
-          </label>
+    <fieldset class="form-group">
+      <div class="row">
+        <legend class="col-form-label col-sm-2 pt-0">上架狀態</legend>
+        <div class="col-sm-10">
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="status" id="status1" value="未上架"
+              {{#ifCond product.status "未上架"}} checked {{/ifCond}} required>
+            <label class="form-check-label" for="status1">
+              未上架
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="status" id="status2" value="上架中"
+              {{#ifCond product.status "上架中"}} checked {{/ifCond}}>
+            <label class="form-check-label" for="status2">
+              上架中
+            </label>
+          </div>
         </div>
       </div>
-    </div>
-  </fieldset>
+    </fieldset>
 
-  <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
