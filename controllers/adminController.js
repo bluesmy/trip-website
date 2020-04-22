@@ -3,7 +3,7 @@ const Product = db.Product
 
 const adminController = {
   getProducts: (req, res) => {
-    return Product.findAll().then(products => {
+    return Product.findAll({ nest: true, raw: true }).then(products => {
       return res.render('admin/products', { products })
     })
   },
@@ -22,12 +22,18 @@ const adminController = {
       price: req.body.price,
       description: req.body.description,
       type: req.body.type,
-      state: req.body.state
+      status: req.body.status
     })
       .then(product => {
         req.flash('success_messages', 'Product was successfully created')
         res.redirect('/admin/products')
       })
+  },
+
+  getProduct: (req, res) => {
+    return Product.findByPk(req.params.id, { nest: true, raw: true }).then(product => {
+      return res.render('admin/product', { product })
+    })
   }
 }
 
