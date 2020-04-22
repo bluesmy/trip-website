@@ -1,6 +1,6 @@
 <div class="modal-content">
   <div class="modal-header">
-    <h2 id="login_title" class="modal-title">免費註冊</h2>
+    <h2 id="login_title" class="modal-title">登入</h2>
   </div>
   <div class="modal-body login-board">
     <div class="login-sns">
@@ -11,8 +11,8 @@
     </div>
     <div class="title-gap"><span class="text-muted">或
       </span></div>
-    <h4>免費註冊</h4>
-    <form role="form" action="/signup" method="POST">
+    <h4>會員帳號登入</h4>
+    <form role="form" action="/signin" method="POST">
       <div class="form-label-group">
         <label for="inputEmail"></label>
         <input type="text" name="email" class="form-control" placeholder="Email" required autofocus>
@@ -21,14 +21,15 @@
         <label for="inputPassword"></label>
         <input type="password" name="password" class="form-control" placeholder="Password" required>
       </div>
-      <div class="form-label-group">
-        <label for="inputPasswordCheck"></label>
-        <input type="password" name="passwordCheck" class="form-control" placeholder="Password Check" required>
-      </div>
+      <a id="forget_my_password_btn" class="pull-right">忘記密碼?</a>
       <div class="clearfix"></div>
-      <button id="signupBTN" type="submit" class="btn btn-primary btn-lg btn-block h4 mt-4">註冊</button>
+      <button id="signupBTN" type="submit" class="btn btn-primary btn-lg btn-block h4 mt-4">登入</button>
     </form>
-    <div id="login_asset"><a href="/signin" class="text-info">使用網站帳戶登入</a>
+    <div id="login_asset">
+      <a href="/signup" class="text-info">免費註冊</a>
+      <a id="cw_login_btn" class="pull-right">
+        企業會員登入
+      </a>
     </div>
   </div>
 </div>

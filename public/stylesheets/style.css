@@ -36,3 +36,7 @@
     height: 12px;
     margin: 20px 0 30px;
 }
+
+.pull-right {
+    float: right!important;
+}
