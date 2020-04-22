@@ -1,5 +1,6 @@
 const db = require('../models')
 const Product = db.Product
+const User = db.User
 
 const adminController = {
   getProducts: (req, res) => {
@@ -70,7 +71,15 @@ const adminController = {
             res.redirect('/admin/products')
           })
       })
-  }
+  },
+
+  getUsers: (req, res) => {
+    User.findAll({ nest: true, raw: true })
+      .then(users => {
+        return res.render('admin/users', { users })
+      })
+  },
+
 }
 
 module.exports = adminController
