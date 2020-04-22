@@ -1,5 +1,14 @@
 const multer = require('multer')
-const upload = multer({ dest: 'temp/' })
+const upload = multer({
+  dest: 'temp/',
+  fileFilter(req, file, cb) {
+    // 只接受三種圖片格式
+    if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
+      cb(null, false, req.flash('error_messages', '圖片上傳失敗，請上傳jpg/jpeg/png檔'))
+    }
+    cb(null, true)
+  }
+})
 
 const productController = require('../controllers/productController.js')
 const userController = require('../controllers/userController.js')

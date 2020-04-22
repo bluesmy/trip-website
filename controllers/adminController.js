@@ -98,7 +98,6 @@ const adminController = {
     }
     const { files, file } = req
     if (files) {
-      console.log(files)
       Product.findByPk(req.params.id).then(product => {
         product.update({
           name: req.body.name,
