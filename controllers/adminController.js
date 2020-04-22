@@ -6,6 +6,10 @@ const adminController = {
     return Product.findAll().then(products => {
       return res.render('admin/products', { products })
     })
+  },
+
+  createProduct: (req, res) => {
+    return res.render('admin/create')
   }
 }
 

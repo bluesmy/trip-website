@@ -14,5 +14,6 @@ module.exports = (app, passport) => {
 
   app.get('/admin', (req, res) => res.redirect('/admin/products'))
   app.get('/admin/products', adminController.getProducts)
+  app.get('/admin/products/create', adminController.createProduct)
 
 }
