@@ -40,3 +40,114 @@
 .pull-right {
     float: right!important;
 }
+
+.btn-wish {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 15px;
+    color: #ccc;
+    font-size: 1.8rem;
+    text-align: center;
+    cursor: pointer;
+}
+
+.product-detail .product-star {
+    font-size: 1.2rem;
+    color: #999;
+}
+
+.product-star .star-100 {
+    color: #26bec9;
+    background-image: url(https://cdn.kkday.com/pc-web/assets/img/ic_star4_4.svg);
+}
+
+.product-star .star-75 {
+    fill: url(#star_75);
+    background-image: url(https://cdn.kkday.com/pc-web/assets/img/ic_star4_3.svg);
+}
+
+.product-star .star-50 {
+    fill: url(#star_50);
+    background-image: url(https://cdn.kkday.com/pc-web/assets/img/ic_star4_2.svg);
+}
+
+.product-star .star-25 {
+    fill: url(#star_25);
+    background-image: url(https://cdn.kkday.com/pc-web/assets/img/ic_star4_1.svg);
+}
+
+.product-star .star-0 {
+    fill: url(#star_0);
+    background-image: url(https://cdn.kkday.com/pc-web/assets/img/ic_star4_0.svg);
+}
+
+.product-star .star {
+    display: inline-block;
+    font-size: 1.2rem;
+    margin-right: .3em;
+    background-size: 100% 100%;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    margin-bottom: -1px;
+}
+
+.star-icon {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    fill: currentColor;
+}
+
+.btn-wish i.fa {
+    margin-right: -1px;
+}
+
+.popup {
+    animation-duration: .6s;
+    animation-iteration-count: 1;
+    animation-name: popup;
+    animation-timing-function: ease-in-out;
+}
+
+.text-danger {
+    color: #ef7a70!important;
+}
+
+.product-item .btn-wish {
+    top: 5px;
+    right: 5px;
+    background-color: #fff;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border-radius: 50%;
+    font-size: 1.6rem;
+    box-shadow: 0 0 4px rgba(0,0,0,.1);
+}
+
+.btn-wish {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 15px;
+    color: #ccc;
+    font-size: 1.8rem;
+    text-align: center;
+    cursor: pointer;
+}
+
+.product-card-a:link {
+    text-decoration: none;
+    color : #000000;
+}
+
+.product-card-a:hover {
+    box-shadow: 0 0 11px rgba(33,33,33,.2);
+}

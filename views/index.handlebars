@@ -1,1 +1,65 @@
-<h1>index</h1>
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link active" href="#">首頁</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="">熱門行程</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="">推薦商家</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="">最近瀏覽</a>
+  </li>
+</ul>
+
+<div class="row">
+  {{#each products}}
+  <div class="col-md-4">
+    <div class="card product-card mb-4 shadow-sm">
+      <a href="/products/{{this.id}}" class="product-card-a">
+        <div class="product-img img-bg"></div>
+        <img class="card-img-top" src="" alt="Card image cap" width="286px" height="180px">
+        {{#if this.isWished }}
+        <form action="/wish/{{this.id}}?_method=DELETE" method="POST" style="display: contents;"><button type="submit"
+            class="btn btn-wish"><i class="fa fa-heart text-danger popup"></i></button></form>
+        {{else}}
+        <form action="/wish/{{this.id}}" method="POST" style="display: contents;"><button type="submit"
+            class="btn btn-wish"><i class="fa fa-heart-o"></i></button>
+        </form>
+        {{/if}}
+        <div class="card-body">
+          <div class="product-detail">
+            <h3>{{this.name}}</h3>
+            <!---->
+            <div class="product-book"><i class="glyphicon glyphicon-fire"></i>
+              17.3K+ 個已訂購
+            </div>
+            <div class="product-place"><i class="fa fa-map-marker"></i>
+              台灣 台南
+            </div>
+            <div class="product-footer">
+              <div class="product-star">
+                <!----> <svg class="star-icon star star-100">
+                  <use xlink:href="#ic_star"></use>
+                </svg><svg class="star-icon star star-75">
+                  <use xlink:href="#ic_star"></use>
+                </svg><svg class="star-icon star star-50">
+                  <use xlink:href="#ic_star"></use>
+                </svg><svg class="star-icon star star-25">
+                  <use xlink:href="#ic_star"></use>
+                </svg><svg class="star-icon star star-0">
+                  <use xlink:href="#ic_star"></use>
+                </svg> <span class="text-grey-light">(評價數)</span></div>
+              <div class="product-pricing">
+                <!----> <span>TWD</span>
+                <h4 class="text-primary">{{this.price}}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+  {{/each}}
+</div>
