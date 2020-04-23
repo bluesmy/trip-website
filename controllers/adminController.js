@@ -29,15 +29,24 @@ const adminController = {
         type: req.body.type,
         status: req.body.status
       }).then(product => {
-        files.map(file => {
+        files.map((file, index) => {
           fs.readFile(file.path, (err, data) => {
             if (err) console.log('Error: ', err)
             fs.writeFile(`upload/${file.originalname}`, data, () => {
-              Media.create({
-                src: file ? `/upload/${file.originalname}` : null,
-                ProductId: product.id,
-                type: 'image'
-              })
+              if (index === 0) {
+                Media.create({
+                  src: file ? `/upload/${file.originalname}` : null,
+                  ProductId: product.id,
+                  type: 'image',
+                  isDefault: 1  // 將此次上傳的第一張圖設為預設圖片
+                })
+              } else {
+                Media.create({
+                  src: file ? `/upload/${file.originalname}` : null,
+                  ProductId: product.id,
+                  type: 'image'
+                })
+              }
             })
           })
         })
@@ -58,7 +67,8 @@ const adminController = {
             Media.create({
               src: file ? `/upload/${file.originalname}` : null,
               ProductId: product.id,
-              type: 'image'
+              type: 'image',
+              isDefault: 1 // 將上傳的圖片設為預設圖片
             })
           })
         })
@@ -110,7 +120,20 @@ const adminController = {
       req.flash('error_messages', "所有欄位皆需填寫")
       return res.redirect('back')
     }
+    let imageExisted = false
+    // 確認先前是否已上傳圖片
+    Media.findOne({
+      where: {
+        ProductId: req.params.id
+      }
+    }).then(media => {
+      if (media) {
+        imageExisted = true
+      }
+    })
+
     const { files, file } = req
+    // 上傳多個檔案
     if (files) {
       Product.findByPk(req.params.id).then(product => {
         product.update({
@@ -121,22 +144,32 @@ const adminController = {
           status: req.body.status
         })
       }).then(product => {
-        files.map(file => {
+        files.map((file, index) => {
           fs.readFile(file.path, (err, data) => {
             if (err) console.log('Error: ', err)
             fs.writeFile(`upload/${file.originalname}`, data, () => {
-              Media.create({
-                src: file ? `/upload/${file.originalname}` : null,
-                ProductId: req.params.id,
-                type: 'image'
-              })
+              // 上傳的第一張圖片設為預設圖片
+              if (index === 0) {
+                Media.create({
+                  src: file ? `/upload/${file.originalname}` : null,
+                  ProductId: req.params.id,
+                  type: 'image',
+                  isDefault: imageExisted ? 0 : 1 // 若先前已有預設圖片，則此次上傳的第一張圖不設為預設圖片
+                })
+              } else { // 其他圖片不設為預設圖片
+                Media.create({
+                  src: file ? `/upload/${file.originalname}` : null,
+                  ProductId: req.params.id,
+                  type: 'image'
+                })
+              }
             })
           })
         })
         req.flash('success_messages', 'Product was successfully updated')
         res.redirect('/admin/products')
       })
-    } else if (file) {
+    } else if (file) {  // 上傳單一檔案
       Product.findByPk(req.params.id).then(product => {
         product.update({
           name: req.body.name,
@@ -152,7 +185,8 @@ const adminController = {
             Media.create({
               src: file ? `/upload/${file.originalname}` : null,
               ProductId: req.params.id,
-              type: 'image'
+              type: 'image',
+              isDefault: imageExisted ? 0 : 1  // 若先前已有預設圖片，則此次上傳的圖不設為預設圖片
             })
           })
         })
