@@ -80,9 +80,23 @@ const adminController = {
   },
 
   getProduct: (req, res) => {
-    return Product.findByPk(req.params.id, { nest: true, raw: true }).then(product => {
-      return res.render('admin/product', { product })
-    })
+    Product.findByPk(req.params.id, {
+      nest: true,
+      raw: true,
+      where: {
+        status: "上架中"
+      }
+    }).then(product =>
+      Media.findOne({
+        nest: true,
+        raw: true,
+        where: {
+          ProductId: req.params.id
+        }
+      }).then(media => {
+        return res.render('admin/product', { product, media })
+      })
+    )
   },
 
   editProduct: (req, res) => {
