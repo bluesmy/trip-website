@@ -252,6 +252,14 @@ const adminController = {
         res.redirect(`/admin/products/${req.params.id}/images`)
       })
     })
+  },
+
+  deleteImage: (req, res) => {
+    Media.findByPk(req.params.image_id).then(media => {
+      media.destroy()
+      req.flash('success_messages', '圖片已成功刪除')
+      res.redirect(`/admin/products/${req.params.id}/images`)
+    })
   }
 }
 
