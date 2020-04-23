@@ -290,6 +290,10 @@ const adminController = {
 
   deleteImage: (req, res) => {
     Media.findByPk(req.params.image_id).then(media => {
+      if (media.isDefault) {
+        req.flash('error_messages', '預設圖片不能刪除，若需刪除請先更改預設圖片')
+        return res.redirect('back')
+      }
       media.destroy()
       req.flash('success_messages', '圖片已成功刪除')
       res.redirect(`/admin/products/${req.params.id}/images`)
