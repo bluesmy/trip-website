@@ -35,6 +35,7 @@ module.exports = (app, passport) => {
   app.delete('/admin/products/:id', adminController.deleteProduct)
   app.get('/admin/products/:id/images', adminController.getImages)
   app.put('/admin/products/:id/images/:image_id', adminController.putDefaultImage)
+  app.delete('/admin/products/:id/images/:image_id', adminController.deleteImage)
   app.get('/admin/users', adminController.getUsers)
   app.put('/admin/users/:id', adminController.putUser)
 }
