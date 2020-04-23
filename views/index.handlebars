@@ -19,7 +19,7 @@
     <div class="card product-card mb-4 shadow-sm">
       <a href="/products/{{this.id}}" class="product-card-a">
         <div class="product-img img-bg"></div>
-        <img class="card-img-top" src="" alt="Card image cap" width="286px" height="180px">
+        <img class="card-img-top" src="{{this.Media.src}}" alt="Card image cap" width="286px" height="180px">
         {{#if this.isWished }}
         <form action="/wish/{{this.id}}?_method=DELETE" method="POST" style="display: contents;"><button type="submit"
             class="btn btn-wish"><i class="fa fa-heart text-danger popup"></i></button></form>

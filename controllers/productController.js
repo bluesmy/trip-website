@@ -9,6 +9,12 @@ const productController = {
       raw: true,
       where: {
         status: "上架中"
+      },
+      include: {
+        model: Media,
+        where: {
+          isDefault: 1
+        }
       }
     }).then(products => {
       return res.render('index', { products })
