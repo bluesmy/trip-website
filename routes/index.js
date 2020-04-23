@@ -1,14 +1,15 @@
 const multer = require('multer')
 const upload = multer({
   dest: 'temp/',
-  fileFilter(req, file, cb) {
+  fileFilter: function (req, file, cb) {
     // 只接受三種圖片格式
     if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
-      cb(null, false, req.flash('error_messages', '圖片上傳失敗，請上傳jpg/jpeg/png檔'))
+      req.fileValidationError = 'goes wrong on the mimetype';
+      cb(null, false)
     }
     cb(null, true)
   }
-})
+}).array('images')
 
 const productController = require('../controllers/productController.js')
 const userController = require('../controllers/userController.js')
@@ -28,10 +29,26 @@ module.exports = (app, passport) => {
   app.get('/admin', (req, res) => res.redirect('/admin/products'))
   app.get('/admin/products', adminController.getProducts)
   app.get('/admin/products/create', adminController.createProduct)
-  app.post('/admin/products', upload.array('images'), adminController.postProduct)
+  app.post('/admin/products', (req, res, next) => {
+    upload(req, res, function (err) {
+      if (req.fileValidationError) {
+        req.flash('error_messages', '圖片上傳失敗，請上傳jpg/jpeg/png檔')
+        return res.redirect('back')
+      }
+      next()
+    })
+  }, adminController.postProduct)
   app.get('/admin/products/:id', adminController.getProduct)
   app.get('/admin/products/:id/edit', adminController.editProduct)
-  app.put('/admin/products/:id', upload.array('images'), adminController.putProduct)
+  app.put('/admin/products/:id', (req, res, next) => {
+    upload(req, res, function (err) {
+      if (req.fileValidationError) {
+        req.flash('error_messages', '圖片上傳失敗，請上傳jpg/jpeg/png檔')
+        return res.redirect('back')
+      }
+      next()
+    })
+  }, adminController.putProduct)
   app.delete('/admin/products/:id', adminController.deleteProduct)
   app.get('/admin/products/:id/images', adminController.getImages)
   app.put('/admin/products/:id/images/:image_id', adminController.putDefaultImage)
