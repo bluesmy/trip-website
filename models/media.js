@@ -4,7 +4,8 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.TEXT,
     src: DataTypes.STRING,
     type: DataTypes.STRING,
-    ProductId: DataTypes.INTEGER
+    ProductId: DataTypes.INTEGER,
+    isDefault: DataTypes.BOOLEAN
   }, {});
   Media.associate = function (models) {
     // associations can be defined here

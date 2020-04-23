@@ -221,16 +221,38 @@ const adminController = {
         ProductId: req.params.id
       },
       include: [Product]
-    }).then(medias => {
+    }).then(media => {
       Product.findByPk(req.params.id, {
         nest: true,
         raw: true
       }).then(product => {
-        return res.render('admin/images', { medias, product })
+        return res.render('admin/images', { media, product })
+      })
+    })
+  },
+
+  putDefaultImage: (req, res) => {
+    Media.findAll({
+      where: {
+        ProductId: req.params.id
+      }
+    }).then(media => {
+      media.forEach(media => {
+        media.update({
+          isDefault: 0
+        })
+      })
+    }).then(media => {
+      Media.findByPk(req.params.image_id).then(media => {
+        media.update({
+          isDefault: 1
+        })
+      }).then(media => {
+        req.flash('success_messages', '預設圖片已成功更新')
+        res.redirect(`/admin/products/${req.params.id}/images`)
       })
     })
   }
-
 }
 
 module.exports = adminController

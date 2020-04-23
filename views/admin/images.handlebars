@@ -7,19 +7,25 @@
       <th scope="col">縮圖</th>
       <th scope="col">Type</th>
       <th scope="col">Description</th>
+      <th scope="col">Default Image</th>
       <th scope="col">＃</th>
     </tr>
   </thead>
   <tbody>
-    {{#each medias}}
+    {{#each media}}
     <tr>
       <th scope="row">{{this.id}}</th>
       <td><img class="card-img-top mb-4" src="{{this.src}}" alt="Card image cap" width="286px" height="180px"></td>
       <td>{{this.type}}</td>
       <td>{{this.description}}</td>
+      {{#if isDefault}}
+      <td>Yes</td>
+      {{else}}
+      <td>No</td>
+      {{/if}}
       <td>
         <form action="/admin/products/{{../product.id}}/images/{{this.id}}?_method=PUT" method="POST">
-          <button type="submit" class="btn btn-link">設為首圖</button>
+          <button type="submit" class="btn btn-link">Set as default image</button>
         </form>
         <form action="/admin/products/{{../product.id}}/images/{{this.id}}?_method=DELETE" method="POST"
           style="display: inline;">
