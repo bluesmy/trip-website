@@ -33,6 +33,7 @@ module.exports = (app, passport) => {
   app.get('/admin/products/:id/edit', adminController.editProduct)
   app.put('/admin/products/:id', upload.array('images'), adminController.putProduct)
   app.delete('/admin/products/:id', adminController.deleteProduct)
+  app.get('/admin/products/:id/images', adminController.getImages)
   app.get('/admin/users', adminController.getUsers)
   app.put('/admin/users/:id', adminController.putUser)
 }

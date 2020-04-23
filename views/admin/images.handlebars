@@ -1,0 +1,32 @@
+<h1>{{product.name}}</h1>
+
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">＃</th>
+      <th scope="col">縮圖</th>
+      <th scope="col">Type</th>
+      <th scope="col">Description</th>
+      <th scope="col">＃</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each medias}}
+    <tr>
+      <th scope="row">{{this.id}}</th>
+      <td><img class="card-img-top mb-4" src="{{this.src}}" alt="Card image cap" width="286px" height="180px"></td>
+      <td>{{this.type}}</td>
+      <td>{{this.description}}</td>
+      <td>
+        <form action="/admin/products/{{../product.id}}/images/{{this.id}}?_method=PUT" method="POST">
+          <button type="submit" class="btn btn-link">設為首圖</button>
+        </form>
+        <form action="/admin/products/{{../product.id}}/images/{{this.id}}?_method=DELETE" method="POST"
+          style="display: inline;">
+          <button type="submit" class="btn btn-link">Delete</button>
+        </form>
+      </td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>

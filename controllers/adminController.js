@@ -197,6 +197,24 @@ const adminController = {
         req.flash('success_messages', '使用者身分已成功更新')
         res.redirect('/admin/users')
       })
+  },
+
+  getImages: (req, res) => {
+    Media.findAll({
+      nest: true,
+      raw: true,
+      where: {
+        ProductId: req.params.id
+      },
+      include: [Product]
+    }).then(medias => {
+      Product.findByPk(req.params.id, {
+        nest: true,
+        raw: true
+      }).then(product => {
+        return res.render('admin/images', { medias, product })
+      })
+    })
   }
 
 }
