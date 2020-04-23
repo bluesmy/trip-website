@@ -20,8 +20,8 @@ const adminController = {
       req.flash('error_messages', "所有欄位皆需填寫")
       return res.redirect('back')
     }
-    const { files, file } = req
-    if (files) {
+    const { files } = req
+    if (files.length !== 0) {
       Product.create({
         name: req.body.name,
         price: req.body.price,
@@ -53,37 +53,16 @@ const adminController = {
         req.flash('success_messages', 'Product was successfully created')
         res.redirect('/admin/products')
       })
-    } else if (file) {
-      Product.create({
-        name: req.body.name,
-        price: req.body.price,
-        description: req.body.description,
-        type: req.body.type,
-        status: req.body.status
-      }).then(product => {
-        fs.readFile(file.path, (err, data) => {
-          if (err) console.log('Error: ', err)
-          fs.writeFile(`upload/${file.originalname}`, data, () => {
-            Media.create({
-              src: file ? `/upload/${file.originalname}` : null,
-              ProductId: product.id,
-              type: 'image',
-              isDefault: 1 // 將上傳的圖片設為預設圖片
-            })
-          })
-        })
-        req.flash('success_messages', 'Product was successfully created')
-        res.redirect('/admin/products')
-      })
     } else {
       return Product.create({
         name: req.body.name,
         price: req.body.price,
         description: req.body.description,
         type: req.body.type,
-        status: req.body.status
+        status: '未上架'
       }).then(product => {
         req.flash('success_messages', 'Product was successfully created')
+        req.flash('error_messages', '未上傳圖片，上架狀態預設為未上架')
         res.redirect('/admin/products')
       })
     }
@@ -132,9 +111,8 @@ const adminController = {
       }
     })
 
-    const { files, file } = req
-    // 上傳多個檔案
-    if (files) {
+    const { files } = req
+    if (files.length !== 0) {
       Product.findByPk(req.params.id).then(product => {
         product.update({
           name: req.body.name,
@@ -163,30 +141,6 @@ const adminController = {
                   type: 'image'
                 })
               }
-            })
-          })
-        })
-        req.flash('success_messages', 'Product was successfully updated')
-        res.redirect('/admin/products')
-      })
-    } else if (file) {  // 上傳單一檔案
-      Product.findByPk(req.params.id).then(product => {
-        product.update({
-          name: req.body.name,
-          price: req.body.price,
-          description: req.body.description,
-          type: req.body.type,
-          status: req.body.status
-        })
-      }).then(product => {
-        fs.readFile(file.path, (err, data) => {
-          if (err) console.log('Error: ', err)
-          fs.writeFile(`upload/${file.originalname}`, data, () => {
-            Media.create({
-              src: file ? `/upload/${file.originalname}` : null,
-              ProductId: req.params.id,
-              type: 'image',
-              isDefault: imageExisted ? 0 : 1  // 若先前已有預設圖片，則此次上傳的圖不設為預設圖片
             })
           })
         })
